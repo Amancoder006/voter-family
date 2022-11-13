@@ -3,14 +3,21 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Input, Layout, Select, InputNumber } from "antd";
 import { Country, State, City } from "country-state-city";
 import "antd/dist/antd.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "../App.css";
 const { Option } = Select;
 const { Content } = Layout;
 const FamilyForm = () => {
+  const navigate = useNavigate();
+  const [flag, setFlag] = useState(false);
   const [stateCode, setStateCode] = useState("");
   const [state, setState] = useState("");
   const [districts, setDistricts] = useState([]);
   const [currDis, setCurrDis] = useState("");
   const [gender, setGender] = useState("");
+  const [finalData, setFinalData] = useState([]);
+
   const onFinish = (value) => {
     // console.log(value);
     const data = {
@@ -20,7 +27,20 @@ const FamilyForm = () => {
       district: currDis,
       gender: gender,
     };
-    console.log("data=>", data);
+    axios({
+      method: "get",
+      url: `https://voter-family.onrender.com/users?state=${data?.state}&district=${data?.district}&gender=${data?.gender}&name=${data?.name}&fname=${data?.fname}&age=${data?.age}`,
+    }).then((res) => {
+      console.log("data=>", res.data);
+      const obj = res.data;
+      if (obj.length === 0) {
+        setFlag(true);
+      } else {
+        console.log("check", obj);
+        setFinalData(obj);
+      }
+      // navigate("/familydetails", { state: { obj } });
+    });
   };
   const handleChangeState = (e) => {
     setState(e);
@@ -43,9 +63,11 @@ const FamilyForm = () => {
       setDistricts(obj);
     }
   }, [stateCode]);
+  // console.log("check=>", finalData);
   return (
     <div>
       <NavBar />
+
       <Content
         style={{
           padding: "40px 80px",
@@ -124,13 +146,13 @@ const FamilyForm = () => {
               </Form.Item>
               <Form.Item label="Gender">
                 <Select placeholder="Gender" onChange={handleChangegender}>
-                  <Option value="Male" key="male">
+                  <Option value="M" key="male">
                     Male
                   </Option>
-                  <Option value="Female" key="female">
+                  <Option value="F" key="female">
                     Female
                   </Option>
-                  <Option value="other" key="other">
+                  <Option value="O" key="other">
                     Other
                   </Option>
                 </Select>
@@ -144,6 +166,71 @@ const FamilyForm = () => {
           ) : null}
         </Form>
       </Content>
+      {finalData.length > 0 ? (
+        <>
+          <div className="grid">
+            {finalData.map((item, index) => {
+              let dob = item.dob;
+              console.log(dob);
+              return (
+                <div
+                  key={index}
+                  className="item1"
+                  onClick={() => navigate("/familydetails")}
+                  onMouseEnter={(e) =>
+                    (e.target.style.transform = "scale(1.02)")
+                  }
+                  onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+                >
+                  <div className="details">
+                    <div className="box">
+                      <div className="content">
+                        <b>Name:</b> {item.name}
+                      </div>
+                      <div className="content">
+                        <b>Father's Name:</b> {item.fname}
+                      </div>
+                    </div>
+                    <div className="box">
+                      <div className="content">
+                        <b>State:</b> {item.state}
+                      </div>
+                      <div className="content">
+                        <b>District:</b> {item.district}
+                      </div>
+                    </div>
+                    <div className="box">
+                      <div className="content">
+                        <b>DOB:</b>{" "}
+                        {dob[0] +
+                          dob[1] +
+                          "/" +
+                          dob[2] +
+                          dob[3] +
+                          "/" +
+                          dob[4] +
+                          dob[5] +
+                          dob[6] +
+                          dob[7]}
+                      </div>
+                      <div className="content">
+                        <b>Gender:</b> {item.gender === "M" ? "Male" : "Female"}
+                      </div>
+                    </div>
+                    <div className="box">
+                      <Button>View More</Button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      ) : flag ? (
+        <h4>
+          <center>No Record Found</center>
+        </h4>
+      ) : null}
     </div>
   );
 };

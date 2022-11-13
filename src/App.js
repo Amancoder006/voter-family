@@ -4,7 +4,6 @@ import  Home  from "./pages/Home";
 import FamilyDetails  from "./pages/FamilyDetails";
 import NavBar from "./components/NavBar";
 import FamilyForm from "./pages/FamilyForm";
-import './App.css';
 
 function App() {
   return (
