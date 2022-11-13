@@ -72,6 +72,7 @@ const FamilyForm = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
+        minHeight:"100vh",
         height: "100%",
         width: "100vw",
       }}
