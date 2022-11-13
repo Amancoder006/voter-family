@@ -12,8 +12,9 @@ const NavBar = () => {
         // margin:'1%',
         display: "flex",
         justifyContent: "space-between",
-        backgroundColor: "rgba(0, 0, 0, 0.851)",
-        paddingBottom: "1%",
+        backgroundColor: "rgba(0, 0, 0, 0.451)",
+        paddingBottom: "0.5%",
+        
       }}
     >
       <div

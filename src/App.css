@@ -1,26 +1,29 @@
-.grid{
+.grid {
   display: flex;
   flex-wrap: wrap;
   margin: 2%;
- 
 }
 .item1 {
   min-height: 2vh;
-  min-width: 90vw;
-  background: linear-gradient(178.1deg, rgb(60, 55, 106) 8.5%, rgb(23, 20, 69) 82.4%);border-radius: 5px;
+  min-width: 85vw;
+  background: rgb(231, 195, 152);
+  border-radius: 5px;
   /* text-align: center; */
   font-size: 15px;
-  color:white;
-  margin-top: -5%;
+  color: white;
+  margin-top: 2%;
   margin-bottom: 2%;
 }
-.details{
+.details {
   display: flex;
   justify-content: space-around;
 }
-.box{
-  margin:1%;
+.box {
+  margin: 1%;
 }
-.content{
-  margin:0.4%;
+.content {
+  margin: 0.4%;
+}
+.btn {
+  margin-top: 20%;
 }

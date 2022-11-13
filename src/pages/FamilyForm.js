@@ -5,6 +5,7 @@ import { Country, State, City } from "country-state-city";
 import "antd/dist/antd.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import background from "../images/img10.jpg";
 import "../App.css";
 const { Option } = Select;
 const { Content } = Layout;
@@ -65,9 +66,17 @@ const FamilyForm = () => {
   }, [stateCode]);
   // console.log("check=>", finalData);
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        height: "100%",
+        width: "100vw",
+      }}
+    >
       <NavBar />
-
       <Content
         style={{
           padding: "40px 80px",
@@ -165,72 +174,82 @@ const FamilyForm = () => {
             </>
           ) : null}
         </Form>
-      </Content>
-      {finalData.length > 0 ? (
-        <>
-          <div className="grid">
-            {finalData.map((item, index) => {
-              let dob = item.dob;
-              console.log(dob);
-              return (
-                <div
-                  key={index}
-                  className="item1"
-                  onClick={() => navigate("/familydetails")}
-                  onMouseEnter={(e) =>
-                    (e.target.style.transform = "scale(1.02)")
-                  }
-                  onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-                >
-                  <div className="details">
-                    <div className="box">
-                      <div className="content">
-                        <b>Name:</b> {item.name}
+        {finalData.length > 0 ? (
+          <>
+            <div className="grid">
+              {finalData.map((item, index) => {
+                let dob = item.dob;
+                console.log(item.fam_id);
+                return (
+                  <div
+                    key={index}
+                    className="item1"
+
+                    // onMouseEnter={(e) =>
+                    //   (e.target.style.transform = "scale(1.02)")
+                    // }
+                    // onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+                  >
+                    <div className="details">
+                      <div className="box">
+                        <div className="content">
+                          <b>Name:</b> {item.name}
+                        </div>
+                        <div className="content">
+                          <b>Father's Name:</b> {item.fname}
+                        </div>
                       </div>
-                      <div className="content">
-                        <b>Father's Name:</b> {item.fname}
+                      <div className="box">
+                        <div className="content">
+                          <b>State:</b> {item.state}
+                        </div>
+                        <div className="content">
+                          <b>District:</b> {item.district}
+                        </div>
                       </div>
-                    </div>
-                    <div className="box">
-                      <div className="content">
-                        <b>State:</b> {item.state}
+                      <div className="box">
+                        <div className="content">
+                          <b>DOB:</b>{" "}
+                          {dob[0] +
+                            dob[1] +
+                            "/" +
+                            dob[2] +
+                            dob[3] +
+                            "/" +
+                            dob[4] +
+                            dob[5] +
+                            dob[6] +
+                            dob[7]}
+                        </div>
+                        <div className="content">
+                          <b>Gender:</b>{" "}
+                          {item.gender === "M" ? "Male" : "Female"}
+                        </div>
                       </div>
-                      <div className="content">
-                        <b>District:</b> {item.district}
+                      <div className="box">
+                        <Button
+                          className="btn"
+                          onClick={() =>
+                            navigate("/familydetails", {
+                              state: { id: item.fam_id },
+                            })
+                          }
+                        >
+                          View More
+                        </Button>
                       </div>
-                    </div>
-                    <div className="box">
-                      <div className="content">
-                        <b>DOB:</b>{" "}
-                        {dob[0] +
-                          dob[1] +
-                          "/" +
-                          dob[2] +
-                          dob[3] +
-                          "/" +
-                          dob[4] +
-                          dob[5] +
-                          dob[6] +
-                          dob[7]}
-                      </div>
-                      <div className="content">
-                        <b>Gender:</b> {item.gender === "M" ? "Male" : "Female"}
-                      </div>
-                    </div>
-                    <div className="box">
-                      <Button>View More</Button>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </>
-      ) : flag ? (
-        <h4>
-          <center>No Record Found</center>
-        </h4>
-      ) : null}
+                );
+              })}
+            </div>
+          </>
+        ) : flag ? (
+          <h4>
+            <center>No Record Found</center>
+          </h4>
+        ) : null}
+      </Content>
     </div>
   );
 };
