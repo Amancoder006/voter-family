@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import  Home  from "./pages/Home";
 import FamilyDetails  from "./pages/FamilyDetails";
 import NavBar from "./components/NavBar";
+import FamilyForm from "./pages/FamilyForm";
 import './App.css';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/familydetails" element={<FamilyDetails/>}/>
+      <Route path="/form" element={<FamilyForm/>}/>
     </Routes>
     </BrowserRouter>
   );
